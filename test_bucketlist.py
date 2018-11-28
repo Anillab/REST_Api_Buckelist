@@ -32,6 +32,15 @@ class Test_Case_Bucketlist(unittest.TestCase):
         self.assertEqual(response.status_code,200)
         self.assertIn('Take a road trip to SouthAfrica',str(response.data))
 
+    def test_api_get_bucketlist_by_id(self):
+        response=self.client().post('/bucketlists',data=self.bucketlist)
+        self.assertEqual(response.status_code,201)
+        result_in_json=json.loads(response.data.decode('utf-8').replace("'","\""))
+        result=self.client().get(
+        '/bucketlists/{}'.format(result_in_json['id'])
+        )
+        self.assertEqual(result.status_code,200)
+        self.assertIn('Take a road trip to SouthAfrica',str(response.data))
     def tearDown(self):
         '''
         tear down all initialized variables
