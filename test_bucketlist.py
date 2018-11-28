@@ -14,6 +14,14 @@ class Test_Case_Bucketlist(unittest.TestCase):
         with self.app_context():
             db.create_all()
 
+    def test_bucketlist_creation(self):
+        '''
+        Test API can create a bucketlist(POST request)
+        '''
+        response=self.client().post('/bucketlists',data=self.bucketlist)
+        self.assertEqual(response.status_code,201)
+        self.assertIn('Take a road trip to SouthAfrica',str(response.data))
+
     def tearDown(self):
         '''
         tear down all initialized variables
