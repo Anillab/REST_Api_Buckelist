@@ -22,6 +22,16 @@ class Test_Case_Bucketlist(unittest.TestCase):
         self.assertEqual(response.status_code,201)
         self.assertIn('Take a road trip to SouthAfrica',str(response.data))
 
+    def test_api_get_all_bucketlists(self):
+        '''
+        Test API can get a bucketlist(GET request)
+        '''
+        response=self.client().post('/bucketlists',data=self.bucketlist)
+        self.assertEqual(response.status_code,201)
+        response=self.client().get('/bucketlists/')
+        self.assertEqual(response.status_code,200)
+        self.assertIn('Take a road trip to SouthAfrica',str(response.data))
+
     def tearDown(self):
         '''
         tear down all initialized variables
