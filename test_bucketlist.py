@@ -41,6 +41,17 @@ class Test_Case_Bucketlist(unittest.TestCase):
         )
         self.assertEqual(result.status_code,200)
         self.assertIn('Take a road trip to SouthAfrica',str(response.data))
+    def test_bucketlist_deletion(self):
+        '''
+        Test API can delete an existing bucketlist (delete request).
+        '''
+        response=self.client().post('/bucketlists',data={'name':'Eat,pray and love'})
+        self.assertEqual(response.status_code,201)
+        res=self.client().delete('/bucketlist/1')
+        self.assertEqual(res.status_code,200)
+        result=self.client().get('/bucketlist/1')
+        self.assertEqual(result.status_code,404)
+
     def tearDown(self):
         '''
         tear down all initialized variables
